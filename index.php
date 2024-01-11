@@ -1,6 +1,9 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="dist/css/default.min.css">
+<link rel="stylesheet" href="dist/css/alertify.min.css">
+
 <!------ Include the above in your HEAD tag ---------->
 <link rel="stylesheet" href="./dist/css/style.css">
 
@@ -39,3 +42,18 @@
 
   </div>
 </div>
+
+
+<script src="dist/js/alertify.min.js"></script>
+
+<script>
+
+<?php if(isset($_GET['logout'])) { ?>
+
+  alertify.set('notifier','position', 'top-center');
+  alertify.success('<?= $_GET['logout']; ?>');
+
+<?php } ?>
+
+
+</script>

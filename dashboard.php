@@ -45,6 +45,8 @@ $conn->close();
 <?php include 'includes/nav.php'; ?>
 <?php include 'includes/sidebar.php';?>
 
+
+
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -362,6 +364,17 @@ $conn->close();
   <!-- /.control-sidebar -->
 
   <?php include 'includes/footer.php';?>
+  <?php include 'includes/script.php';?>
+
+  <script>
+
+    <?php if(isset($_GET['welcome'])) {  ?>
+      alertify.set('notifier','position', 'top-right');
+      alertify.success('<?= $_GET['welcome']; ?>');
+    <?php } ?>
+    
+
+</script>
 </div>
 <!-- ./wrapper -->
 

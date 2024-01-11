@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $row = $result->fetch_assoc();
         $_SESSION['user_id'] = $row['Id'];
         $_SESSION['username'] = $row['username'];
-        header("Location: dashboard.php");
+        header("Location: dashboard.php?welcome=Welcome Back admin");
     } else {
         // Login failed
         header("Location: index.php?error=Invalid username or password");

@@ -17,6 +17,8 @@
 <script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script>
+<!-- alertify -->
+<script src="dist/js/alertify.min.js"></script>
 <!-- Page specific script -->
 <script>
   $(function () {

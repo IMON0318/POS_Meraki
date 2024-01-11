@@ -192,22 +192,6 @@ $data = $conn->query("SELECT * FROM client_supplier_tbl WHERE role = 2");
 
     </form>
 
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   </div>
   <!-- /.content-wrapper -->
 
@@ -222,5 +206,10 @@ $data = $conn->query("SELECT * FROM client_supplier_tbl WHERE role = 2");
 <!-- ./wrapper -->
 
 <?php include 'includes/script.php';?>
+
+
+
+
+
 </body>
 </html>

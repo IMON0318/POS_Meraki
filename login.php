@@ -11,9 +11,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "SELECT Id, username FROM User WHERE username = '$username' AND password = '$password'";
     $result = $conn->query($sql);
 
-    if ($result->num_rows == 1) {
+    $row = $result->fetch_assoc();
+
+    if ($row) {
         // Login successful
-        $row = $result->fetch_assoc();
         $_SESSION['user_id'] = $row['Id'];
         $_SESSION['username'] = $row['username'];
         header("Location: dashboard.php?welcome=Welcome Back admin");

@@ -368,13 +368,22 @@ $conn->close();
 
   <script>
 
-    <?php if(isset($_GET['welcome'])) {  ?>
-      alertify.set('notifier','position', 'top-right');
-      alertify.success('<?= $_GET['welcome']; ?>');
-    <?php } ?>
-    
+<?php if(isset($_GET['welcome'])) {  ?>
+  alertify.set('notifier','position', 'top-right');
+  alertify.success('<?= htmlspecialchars($_GET['welcome']); ?>');
+  
+  // Delay the removal of 'welcome' parameter after 2 seconds (adjust as needed)
+  setTimeout(function() {
+    // Remove the 'welcome' parameter from the URL
+    var urlWithoutWelcome = window.location.href.split('?')[0];
+    history.replaceState({}, document.title, urlWithoutWelcome);
+  }, 1000); // Adjust the timeout duration as needed
+
+<?php } ?>
 
 </script>
+
+
 </div>
 <!-- ./wrapper -->
 

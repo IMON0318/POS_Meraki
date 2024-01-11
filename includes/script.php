@@ -19,6 +19,7 @@
 <script src="dist/js/adminlte.min.js"></script>
 <!-- alertify -->
 <script src="dist/js/alertify.min.js"></script>
+<script src="dist/js/sweetalert2.all.min.js"></script>
 <!-- Page specific script -->
 <script>
   $(function () {

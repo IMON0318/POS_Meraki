@@ -27,7 +27,7 @@
                         errorMessage.style.display = 'none';
                         window.location.href = 'http://localhost/pos/index.php'; // Redirect after hiding the error
                     }
-                }, 3000);
+                }, 2000);
               </script>";
     }
     ?>
@@ -47,13 +47,15 @@
 <script src="dist/js/alertify.min.js"></script>
 
 <script>
-
-<?php if(isset($_GET['logout'])) { ?>
-
-  alertify.set('notifier','position', 'top-center');
-  alertify.success('<?= $_GET['logout']; ?>');
-
-<?php } ?>
-
-
+  <?php if(isset($_GET['logout'])) { ?>
+    alertify.set('notifier', 'position', 'top-center');
+    alertify.success('<?= htmlspecialchars($_GET['logout']); ?>');
+    
+    // Delay the removal of 'logout' parameter after 2 seconds (adjust as needed)
+    setTimeout(function() {
+      // Remove the 'logout' parameter from the URL
+      var urlWithoutLogout = window.location.href.split('?')[0];
+      history.replaceState({}, document.title, urlWithoutLogout);
+    }, 2000); // Adjust the timeout duration as needed
+  <?php } ?>
 </script>

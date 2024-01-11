@@ -41,7 +41,7 @@ $data = $conn->query("SELECT * FROM client_supplier_tbl WHERE role = 2");
 
 
             
-<form action="insert_users.php" method="POST">
+<form action="insert_client.php" method="POST">
        <!-- Main content -->
     <section class="content">
       <div class="container-fluid ">
@@ -206,6 +206,20 @@ $data = $conn->query("SELECT * FROM client_supplier_tbl WHERE role = 2");
 <!-- ./wrapper -->
 
 <?php include 'includes/script.php';?>
+
+<script>
+  <?php if(isset($_GET['success'])) {  ?>
+    Swal.fire({
+      title: "Success",
+      text: "<?= htmlspecialchars($_GET['success']) ?>",
+      icon: "success"
+    }).then(function() {
+      // Remove the 'success' parameter from the URL
+      var urlWithoutSuccess = window.location.href.split('?')[0];
+      history.replaceState({}, document.title, urlWithoutSuccess);
+    });
+  <?php } ?>
+</script>
 
 
 

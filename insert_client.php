@@ -22,7 +22,7 @@ $stmt = $conn->prepare("INSERT INTO client_supplier_tbl (name, address, contact_
 $stmt->bind_param("sssisii", $name, $address, $contact_person, $contact_no, $email, $tin_no, $role);
 
 if ($stmt->execute()) {
-    echo "Data inserted successfully!";
+    header("Location: client info.php?success=Data Inserted Successfully");
 } else {
     echo "Error: " . $stmt->error;
 }

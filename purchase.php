@@ -1,5 +1,12 @@
+<?php 
+
+include ('conn.php');
+
+$data = $conn->query("SELECT * FROM client_supplier_tbl WHERE role = 2");
 
 
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <?php include 'includes/header.php';?>
@@ -69,7 +76,7 @@
                   <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-4 col-form-label bg-olive">Date :</label>
                     <div class="col-sm-6">
-                      <input type="date" class="form-control" id="inputEmail3" placeholder="Datex">
+                      <input type="date" class="form-control" id="inputEmail3" placeholder="Datex" value="<?php echo date('Y-d-m'); ?>">
                     </div>
                   </div>
 
@@ -81,9 +88,28 @@
                   </div>
 
                   <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-4 col-form-label  bg-olive">Client Name:</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control" id="inputEmail3" placeholder="Client Name">
+                    <label for="clients" class="col-sm-4 col-form-label bg-olive">Client Name:</label>
+                    <div class="col-sm-6">
+                      <!-- <input type="text" class="form-control" id="inputEmail3" placeholder="Client Name"> -->
+                      <select name="clients" id="clients" class="form-control" required>
+                        <?php 
+
+                          if ($data->num_rows > 0) 
+                          {
+                            echo '<option value="">Select Client</option>';
+                            while ($row = $data -> fetch_assoc())
+                            {
+                              echo '<option value="' . $row['Id_client_sup'] . '">' . $row['name'] . '</option>';
+                            }
+                          }
+                          else 
+                          {
+                            echo '<option value="">' . 'No Clients Found' . '</option>';
+                          }
+                        
+                        ?>
+                    </select>
+
                     </div>
                   </div>
 
@@ -99,7 +125,7 @@
                     <div class="col-sm-6">
                     <div class="form-input">
                     <select name="purpose" class="form-control" required>
-                      <option  value=""></option>
+                      <option  value="">Select UOM</option>
                         <option value="Seminar/ Meeting">Bot</option>
                         <option  value="">Box</option>
                         <option  value="">Bundle</option>
@@ -156,7 +182,7 @@
                     <div class="col-sm-6">
                     <div class="form-input">
                     <select name="purpose" class="form-control" required>
-                      <option  value=""></option>
+                      <option  value="">Select Terms</option>
                         <option value="Seminar/ Meeting">Cash</option>
                         <option  value="">COD</option>
                         <option  value="">Gcash</option>

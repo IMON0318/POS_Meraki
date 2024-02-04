@@ -114,9 +114,9 @@ $data = $conn->query("SELECT * FROM client_supplier_tbl WHERE role = 2");
                   </div>
 
                   <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-4 col-form-label  bg-olive">Qty:</label>
+                    <label for="inputEmail3" class="col-sm-4 col-form-label bg-olive">Qty:</label>
                     <div class="col-sm-6">
-                      <input type="text" class="form-control" id="inputEmail3" placeholder="Qty">
+                      <input type="number" class="qty form-control" id="qty" placeholder="Qty" oninput="calculate()">
                     </div>
                   </div>
 
@@ -151,7 +151,7 @@ $data = $conn->query("SELECT * FROM client_supplier_tbl WHERE role = 2");
             <div class="col-sm-4">
               <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-4 col-form-label bg-olive">Description :</label>
-                    <div class="col-sm-8">
+                    <div class="col-sm-6">
                       <input type="text" class="form-control" id="inputEmail3" placeholder="Item Description">
                     </div>
                   </div>
@@ -166,14 +166,14 @@ $data = $conn->query("SELECT * FROM client_supplier_tbl WHERE role = 2");
                   <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-4 col-form-label  bg-olive">Price:</label>
                     <div class="col-sm-6">
-                      <input type="text" class="form-control" id="inputEmail3" placeholder="Price">
+                      <input type="number" class="price form-control" id="price" placeholder="Price" oninput="calculate()">
                     </div>
                   </div>
 
                   <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-4 col-form-label  bg-olive">Total Amount:</label>
                     <div class="col-sm-6">
-                      <input type="text" class="form-control" id="inputEmail3" placeholder="Total Amount">
+                      <input type="text" class="total form-control" id="total" readonly>
                     </div>
                   </div>
 
@@ -190,7 +190,7 @@ $data = $conn->query("SELECT * FROM client_supplier_tbl WHERE role = 2");
                         <option  value="">7 Days</option>
                         <option  value="">30 Days</option>
                         <option  value="">60 Days</option>
-    
+                        <option  value="">Others</option>
                      </select>
                   </div>
                     </div>
@@ -407,21 +407,6 @@ $data = $conn->query("SELECT * FROM client_supplier_tbl WHERE role = 2");
 
 
 
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   </div>
   <!-- /.content-wrapper -->
 
@@ -435,6 +420,21 @@ $data = $conn->query("SELECT * FROM client_supplier_tbl WHERE role = 2");
 </div>
 <!-- ./wrapper -->
 
+<script>
+  function calculate() {
+    var qty =parseFloat(document.getElementById("qty").value);
+    var price =parseFloat(document.getElementById("price").value);
+
+    var result = qty * price;
+
+    document.getElementById('total').value =result;
+
+  }
+</script>
+
+
 <?php include 'includes/script.php';?>
+
+
 </body>
 </html>

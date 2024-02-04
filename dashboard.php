@@ -400,6 +400,6 @@ $conn->close();
 <!-- PAGE PLUGINS -->
 <script src="plugins/chart.js/Chart.min.js"></script>
 
-<script src="dist/js/pages/data.js"></script>
+<script src="dist/js/pages/datas.js"></script>
 </body>
 </html>

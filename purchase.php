@@ -3,6 +3,8 @@
 include ('conn.php');
 
 $data = $conn->query("SELECT * FROM client_supplier_tbl WHERE role = 2");
+$uom = $conn->query("SELECT * FROM uom_data");
+$terms = $conn->query("SELECT * FROM terms_data");
 
 
 
@@ -92,21 +94,15 @@ $data = $conn->query("SELECT * FROM client_supplier_tbl WHERE role = 2");
                     <div class="col-sm-6">
                       <!-- <input type="text" class="form-control" id="inputEmail3" placeholder="Client Name"> -->
                       <select name="clients" id="clients" class="form-control" required>
-                        <?php 
-
-                          if ($data->num_rows > 0) 
-                          {
+                      <?php
+                        if ($data->num_rows > 0) {
                             echo '<option value="">Select Client</option>';
-                            while ($row = $data -> fetch_assoc())
-                            {
-                              echo '<option value="' . $row['Id_client_sup'] . '">' . $row['name'] . '</option>';
+                            while ($row = $data->fetch_assoc()) {
+                                echo '<option value="' . $row['Id_client_sup'] . '">' . $row['name'] . '</option>';
                             }
-                          }
-                          else 
-                          {
-                            echo '<option value="">' . 'No Clients Found' . '</option>';
-                          }
-                        
+                        } else {
+                            echo '<option value="">No Clients Found</option>';
+                        }
                         ?>
                     </select>
 
@@ -124,26 +120,50 @@ $data = $conn->query("SELECT * FROM client_supplier_tbl WHERE role = 2");
                     <label for="inputEmail3" class="col-sm-4 col-form-label  bg-olive">UOM:</label>
                     <div class="col-sm-6">
                     <div class="form-input">
-                    <select name="purpose" class="form-control" required>
-                      <option  value="">Select UOM</option>
-                        <option value="Seminar/ Meeting">Bot</option>
-                        <option  value="">Box</option>
-                        <option  value="">Bundle</option>
-                        <option  value="">Case</option>
-                        <option  value="">MB</option>
-                        <option  value="">Pack</option>
-                        <option  value="">PC's</option>
-                        <option  value="">Roll</option>
-                        <option  value="">Set</option>
-                        <option  value="">Tray</option>
-                        <option  value="">Tube</option>
-                        <option  value="">Unit</option>
-                        <option  value="">Vial</option>
-                      
+                    <select name="uom_selct" id="uom_select" class="form-control" required>
+                    <?php
+                        if ($uom->num_rows > 0) {
+                            echo '<option value="">Select Client</option>';
+                            while ($row = $uom->fetch_assoc()) {
+                                echo '<option value="' . $row['uom_id'] . '">' . $row['uom_name'] . '</option>';
+                            }
+                        } else {
+                            echo '<option value="">No Clients Found</option>';
+                        }
+                      ?>
+                      <option value="others">others</option>
                      </select>
                   </div>
                     </div>
                   </div>
+
+
+                  <!-- Modal for UOM -->
+                <div class="modal fade" id="uommodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Add UOM</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <form action="">
+                          <input name="uom_id" id="uom_id" class="form-control" id="recipient-name" hidden>
+                        <div class="form-group">
+                          <label for="recipient-name" class="col-form-label">UOM Name</label>
+                          <input type="text" class="form-control" id="recipient-name">
+                        </div>
+                        </form>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                  
             
                 </div>
@@ -171,9 +191,9 @@ $data = $conn->query("SELECT * FROM client_supplier_tbl WHERE role = 2");
                   </div>
 
                   <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-4 col-form-label  bg-olive">Total Amount:</label>
+                    <label for="inputEmail3" class="col-sm-4 col-form-label  bg-olive" >Total Amount:</label>
                     <div class="col-sm-6">
-                      <input type="text" class="total form-control" id="total" readonly>
+                      <input type="text" class="total form-control" id="total" placeholder="₱" readonly>
                     </div>
                   </div>
 
@@ -181,21 +201,49 @@ $data = $conn->query("SELECT * FROM client_supplier_tbl WHERE role = 2");
                     <label for="inputEmail3" class="col-sm-4 col-form-label  bg-olive">Terms:</label>
                     <div class="col-sm-6">
                     <div class="form-input">
-                    <select name="purpose" class="form-control" required>
-                      <option  value="">Select Terms</option>
-                        <option value="Seminar/ Meeting">Cash</option>
-                        <option  value="">COD</option>
-                        <option  value="">Gcash</option>
-                        <option  value="">Bank Transfer</option>
-                        <option  value="">7 Days</option>
-                        <option  value="">30 Days</option>
-                        <option  value="">60 Days</option>
-                        <option  value="">Others</option>
+                    <select name="terms_select" id="terms_select" class="form-control" required>
+                    <?php
+                        if ($terms->num_rows > 0) {
+                            echo '<option value="">Select Client</option>';
+                            while ($row = $terms->fetch_assoc()) {
+                                echo '<option value="' . $row['terms_id'] . '">' . $row['terms_name'] . '</option>';
+                            }
+                        } else {
+                            echo '<option value="">No Clients Found</option>';
+                        }
+                      ?>
+                      <option value="others">others</option>
                      </select>
                   </div>
                     </div>
                   </div>
                 </div><!-- end of col-sm-4 -->
+                
+                <!-- Modal for terms -->
+                <div class="modal fade" id="termsmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Add Terms</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                      <input name="terms_id" id="terms_id" class="form-control" id="recipient-name" hidden>
+                        <div class="form-group">
+                          <label for="recipient-name" class="col-form-label">Terms Name</label>
+                          <input type="text" class="form-control" id="recipient-name">
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
 
 
             <div class="col-sm-4">
@@ -425,11 +473,31 @@ $data = $conn->query("SELECT * FROM client_supplier_tbl WHERE role = 2");
     var qty =parseFloat(document.getElementById("qty").value);
     var price =parseFloat(document.getElementById("price").value);
 
-    var result = qty * price;
+    var result = "₱" + qty * price;
 
-    document.getElementById('total').value =result;
+    document.getElementById('total').value = result;
 
   }
+
+  
+</script>
+
+<script>
+  document.getElementById('terms_select').addEventListener('change', function() {
+    var selectedOption = this.value;
+    if (selectedOption === 'others') {
+      $('#termsmodal').modal('show');
+    }
+  });
+
+  document.getElementById('uom_select').addEventListener('change', function() {
+    var selectedOption = this.value;
+    if (selectedOption === 'others') {
+      $('#uommodal').modal('show');
+    }
+  });
+
+  
 </script>
 
 

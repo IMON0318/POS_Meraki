@@ -6,54 +6,6 @@ $data = $conn->query("SELECT * FROM client_supplier_tbl WHERE role = 2");
 $uom = $conn->query("SELECT * FROM uom_data");
 $terms = $conn->query("SELECT * FROM terms_data");
 
-
-function addterms($buttonName, $conn) {
-  if ($_SERVER["REQUEST_METHOD"] == "POST") {
-      if (isset($_POST['add_terms']) && $_POST['add_terms'] == $buttonName) {
-          $terms_id = $_POST['terms_id'];
-          $terms_name = $_POST['terms_name'];
-
-          $sql = "INSERT INTO terms_data (terms_id, terms_name) VALUES ('$terms_id', '$terms_name')";
-          if (mysqli_query($conn, $sql)) {
-              header("Location: purchase.php");
-              exit();
-          } else {
-              echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-          }
-      }
-  }
-}
-
-// Check if form is submitted and insert data based on button clicked
-addterms("add_terms", $conn);
-
-?>
-
-<?php 
-
-function adduom($buttonName, $conn) {
-  if ($_SERVER["REQUEST_METHOD"] == "POST") {
-      if (isset($_POST['add_uom']) && $_POST['add_uom'] == $buttonName) {
-          $uom_id = $_POST['uom_id'];
-          $uom_name = $_POST['uom_name'];
-
-          $sql = "INSERT INTO uom_data (uom_id, uom_name) VALUES ('$uom_id', '$uom_name')";
-          if (mysqli_query($conn, $sql)) {
-              header("Location: purchase.php");
-              exit();
-          } else {
-              echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-          }
-      }
-  }
-
-  
-}
-
-adduom("add_uom", $conn)
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -181,7 +133,7 @@ adduom("add_uom", $conn)
                   </div>
                     </div>
                   </div>
-                  <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+              <form action="insert_terms_uom.php" method="post">
                   <!-- Modal for UOM -->
                 <div class="modal fade" id="uommodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -205,13 +157,13 @@ adduom("add_uom", $conn)
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" id="add_uom" name="add_uom" class="btn btn-primary">Save changes</button>
                       </div>
-                     
+                </form>
                     </div>
                   </div>
                 </div>
                 </div>
 
-                </form>
+              
 
             <div class="col-sm-4">
               <div class="form-group row">
@@ -263,7 +215,7 @@ adduom("add_uom", $conn)
                     </div>
                   </div>
                 </div><!-- end of col-sm-4 -->
-          <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+          <form action="insert_terms_uom.php" method="post">
                 <!-- Modal for terms -->
                 <div class="modal fade" id="termsmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -275,7 +227,7 @@ adduom("add_uom", $conn)
                         </button>
                       </div>
                       <div class="modal-body">
-                      <input name="terms_id" id="terms_id" class="form-control" id="recipient-name" hidden>
+                      <input name="terms_id" id="terms_id" class="form-control" id="terms_id" hidden>
                         <div class="form-group">
                           <label for="terms-name" class="col-form-label">Terms Name</label>
                           <input type="text" class="form-control" name="terms_name" id="terms_name">
@@ -511,6 +463,20 @@ adduom("add_uom", $conn)
   <?php include 'includes/footer.php';?>
 </div>
 <!-- ./wrapper -->
+
+<script>
+  <?php if(isset($_GET['success'])) {  ?>
+    Swal.fire({
+      title: "Success",
+      text: "<?= htmlspecialchars($_GET['success']) ?>",
+      icon: "success"
+    }).then(function() {
+      // Remove the 'success' parameter from the URL
+      var urlWithoutSuccess = window.location.href.split('?')[0];
+      history.replaceState({}, document.title, urlWithoutSuccess);
+    });
+  <?php } ?>
+</script>
 
 <script>
 

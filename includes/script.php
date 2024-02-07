@@ -38,3 +38,18 @@
     });
   });
 </script>
+
+
+<script>
+  <?php if(isset($_GET['success'])) {  ?>
+    Swal.fire({
+      title: "Success",
+      text: "<?= htmlspecialchars($_GET['success']) ?>",
+      icon: "success"
+    }).then(function() {
+      // Remove the 'success' parameter from the URL
+      var urlWithoutSuccess = window.location.href.split('?')[0];
+      history.replaceState({}, document.title, urlWithoutSuccess);
+    });
+  <?php } ?>
+</script>

@@ -7,6 +7,52 @@ $uom = $conn->query("SELECT * FROM uom_data");
 $terms = $conn->query("SELECT * FROM terms_data");
 
 
+function addterms($buttonName, $conn) {
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      if (isset($_POST['add_terms']) && $_POST['add_terms'] == $buttonName) {
+          $terms_id = $_POST['terms_id'];
+          $terms_name = $_POST['terms_name'];
+
+          $sql = "INSERT INTO terms_data (terms_id, terms_name) VALUES ('$terms_id', '$terms_name')";
+          if (mysqli_query($conn, $sql)) {
+              header("Location: purchase.php");
+              exit();
+          } else {
+              echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+          }
+      }
+  }
+}
+
+// Check if form is submitted and insert data based on button clicked
+addterms("add_terms", $conn);
+
+?>
+
+<?php 
+
+function adduom($buttonName, $conn) {
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      if (isset($_POST['add_uom']) && $_POST['add_uom'] == $buttonName) {
+          $uom_id = $_POST['uom_id'];
+          $uom_name = $_POST['uom_name'];
+
+          $sql = "INSERT INTO uom_data (uom_id, uom_name) VALUES ('$uom_id', '$uom_name')";
+          if (mysqli_query($conn, $sql)) {
+              header("Location: purchase.php");
+              exit();
+          } else {
+              echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+          }
+      }
+  }
+
+  
+}
+
+adduom("add_uom", $conn)
+
+
 
 ?>
 <!DOCTYPE html>
@@ -70,8 +116,7 @@ $terms = $conn->query("SELECT * FROM terms_data");
 
 
 <!-- CONTENT para sa inputs -->
-                <div class="modal-body">
-                  <form  method="POST">
+              <div class="modal-body">
                     <div class="row">
                       <div class="col-sm-4">
 
@@ -123,7 +168,7 @@ $terms = $conn->query("SELECT * FROM terms_data");
                     <select name="uom_selct" id="uom_select" class="form-control" required>
                     <?php
                         if ($uom->num_rows > 0) {
-                            echo '<option value="">Select Client</option>';
+                            echo '<option value="">Select UOM</option>';
                             while ($row = $uom->fetch_assoc()) {
                                 echo '<option value="' . $row['uom_id'] . '">' . $row['uom_name'] . '</option>';
                             }
@@ -136,8 +181,7 @@ $terms = $conn->query("SELECT * FROM terms_data");
                   </div>
                     </div>
                   </div>
-
-
+                  <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                   <!-- Modal for UOM -->
                 <div class="modal fade" id="uommodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -149,24 +193,25 @@ $terms = $conn->query("SELECT * FROM terms_data");
                         </button>
                       </div>
                       <div class="modal-body">
-                        <form action="">
-                          <input name="uom_id" id="uom_id" class="form-control" id="recipient-name" hidden>
+                  
+                          <input name="uom_id" id="uom_id" class="form-control" id="uom_id" hidden>
                         <div class="form-group">
-                          <label for="recipient-name" class="col-form-label">UOM Name</label>
-                          <input type="text" class="form-control" id="recipient-name">
+                          <label for="uom_name" class="col-form-label">UOM Name</label>
+                          <input type="text" name="uom_name"  class="form-control" id="uom_name">
                         </div>
-                        </form>
+                        
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="submit" id="add_uom" name="add_uom" class="btn btn-primary">Save changes</button>
                       </div>
+                     
                     </div>
                   </div>
                 </div>
-                 
-            
                 </div>
+
+                </form>
 
             <div class="col-sm-4">
               <div class="form-group row">
@@ -204,7 +249,7 @@ $terms = $conn->query("SELECT * FROM terms_data");
                     <select name="terms_select" id="terms_select" class="form-control" required>
                     <?php
                         if ($terms->num_rows > 0) {
-                            echo '<option value="">Select Client</option>';
+                            echo '<option value="">Select Terms</option>';
                             while ($row = $terms->fetch_assoc()) {
                                 echo '<option value="' . $row['terms_id'] . '">' . $row['terms_name'] . '</option>';
                             }
@@ -218,7 +263,7 @@ $terms = $conn->query("SELECT * FROM terms_data");
                     </div>
                   </div>
                 </div><!-- end of col-sm-4 -->
-                
+          <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                 <!-- Modal for terms -->
                 <div class="modal fade" id="termsmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -232,18 +277,18 @@ $terms = $conn->query("SELECT * FROM terms_data");
                       <div class="modal-body">
                       <input name="terms_id" id="terms_id" class="form-control" id="recipient-name" hidden>
                         <div class="form-group">
-                          <label for="recipient-name" class="col-form-label">Terms Name</label>
-                          <input type="text" class="form-control" id="recipient-name">
+                          <label for="terms-name" class="col-form-label">Terms Name</label>
+                          <input type="text" class="form-control" name="terms_name" id="terms_name">
                         </div>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="submit" name="add_terms" id="add_terms" class="btn btn-primary" value="add_terms">Save changes</button>
                       </div>
                     </div>
                   </div>
                 </div>
-                
+            </form>  
 
 
             <div class="col-sm-4">
@@ -425,7 +470,6 @@ $terms = $conn->query("SELECT * FROM terms_data");
 
                
 
-            </form>
 
 
 
@@ -469,6 +513,7 @@ $terms = $conn->query("SELECT * FROM terms_data");
 <!-- ./wrapper -->
 
 <script>
+
   function calculate() {
     var qty =parseFloat(document.getElementById("qty").value);
     var price =parseFloat(document.getElementById("price").value);

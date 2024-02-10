@@ -146,7 +146,7 @@ $data = $conn->query("SELECT * FROM client_supplier_tbl WHERE role = 1");
                   <tbody>
                   <?php foreach ($data as $row): ?>
                   <tr>
-                  <td><?php echo $row['name']; ?></td>
+                  <td><?php echo $row['client_sup_name']; ?></td>
                   <td><?php echo $row['address']; ?></td>
                   <td><?php echo $row['contact_person']; ?></td>
                   <td><?php echo $row['contact_no']; ?></td>

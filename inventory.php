@@ -1,4 +1,11 @@
+<?php 
 
+include ('conn.php');
+
+$uom = $conn->query("SELECT * FROM uom_data");
+$purchase_data = $conn->query("SELECT * FROM purchase");
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -49,7 +56,7 @@
                       <a href="#" class="btn btn-block bg-dark"><h4>Inventory</h4></a>
                     </td>
                     <td>
-                      <a href="inventory.php" class="btn btn-block bg-orange">New Transaction</a>
+                      <a href="inventory.php" class="btn btn-block bg-orange">New Product</a>
                     </td>
                     <td>
                     <a href="summary.php" class="btn btn-block bg-success">Summary Report</a>
@@ -67,53 +74,59 @@
                       <div class="col-sm-4">
 
                   <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-4 col-form-label bg-olive">Item Code :</label>
+                    <label for="item_code" class="col-sm-4 col-form-label bg-olive">Item Code :</label>
                     <div class="col-sm-6">
-                      <input type="date" class="form-control" id="inputEmail3" placeholder="Item Code">
+                      <input type="number" class="form-control" name="item_code" id="item_code" placeholder="Item Code" value="<?php echo rand(0,999999) ?>">
                     </div>
                   </div>
 
                   <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-4 col-form-label  bg-olive">Brand:</label>
+                    <label for="brand_name" class="col-sm-4 col-form-label  bg-olive">Brand Name:</label>
                     <div class="col-sm-6">
-                      <input type="text" class="form-control" id="inputEmail3" placeholder="Brand">
+                      <input type="text" class="form-control" name="brand_name" id="brand_name" placeholder="Brand Name">
                     </div>
                   </div>
 
                   <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-4 col-form-label  bg-olive">Item Description:</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control" id="inputEmail3" placeholder="Item Description">
-                    </div>
-                  </div>
-
-                  <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-4 col-form-label  bg-olive"> Packing Type :</label>
+                    <label for="item_desc" class="col-sm-4 col-form-label  bg-olive">Item Description:</label>
                     <div class="col-sm-6">
-                      <input type="text" class="form-control" id="inputEmail3" placeholder="PAcking Type">
+                    <select name="item_desc" id="item_desc" class="form-control">
+                    <?php
+                        if ($purchase_data->num_rows > 0) {
+                            echo '<option value="">Item Description</option>';
+                            while ($row = $purchase_data->fetch_assoc()) {
+                                echo '<option value="' . $row['purchase_id'] . '">' . $row['description'] . '</option>';
+                            }
+                        } else {
+                            echo '<option value="">No Clients Found</option>';
+                        }
+                      ?>
+                     </select>
                     </div>
                   </div>
 
                   <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-4 col-form-label  bg-olive">UOM:</label>
+                    <label for="pack_type" class="col-sm-4 col-form-label  bg-olive"> Packing Type :</label>
+                    <div class="col-sm-6">
+                      <input type="text" class="form-control" name="pack_type" id="pack_type" placeholder="Packing Type">
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="uom_select" class="col-sm-4 col-form-label  bg-olive">UOM:</label>
                     <div class="col-sm-6">
                     <div class="form-input">
-                    <select name="purpose" class="form-control" required>
-                      <option  value=""></option>
-                        <option value="Seminar/ Meeting">Bot</option>
-                        <option  value="">Box</option>
-                        <option  value="">Bundle</option>
-                        <option  value="">Case</option>
-                        <option  value="">MB</option>
-                        <option  value="">Pack</option>
-                        <option  value="">PC's</option>
-                        <option  value="">Roll</option>
-                        <option  value="">Set</option>
-                        <option  value="">Tray</option>
-                        <option  value="">Tube</option>
-                        <option  value="">Unit</option>
-                        <option  value="">Vial</option>
-                      
+                    <select name="uom_select" id="uom_select" class="form-control">
+                    <?php
+                        if ($uom->num_rows > 0) {
+                            echo '<option value="">Select UOM</option>';
+                            while ($row = $uom->fetch_assoc()) {
+                                echo '<option value="' . $row['uom_id'] . '">' . $row['uom_name'] . '</option>';
+                            }
+                        } else {
+                            echo '<option value="">No Clients Found</option>';
+                        }
+                      ?>
                      </select>
                   </div>
                     </div>
@@ -124,30 +137,30 @@
 
             <div class="col-sm-4">
               <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-4 col-form-label bg-olive">Expiry Date:</label>
+                    <label for="expirty_date" class="col-sm-4 col-form-label bg-olive">Expiry Date:</label>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" id="inputEmail3" placeholder="Expiry Date">
+                      <input type="date" class="form-control" name="expiry_date" id="expiry_date" placeholder="Expiry Date">
                     </div>
                   </div>
 
                   <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-4 col-form-label  bg-olive"> Lot#:</label>
+                    <label for="lot_no" class="col-sm-4 col-form-label  bg-olive"> Lot#:</label>
                     <div class="col-sm-6">
-                      <input type="text" class="form-control" id="inputEmail3" placeholder="Lot#">
+                      <input type="number" class="form-control" name="lot_no" id="lot_no" placeholder="Lot#">
                     </div>
                   </div>
 
                   <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-4 col-form-label  bg-olive"> Serial No. :</label>
+                    <label for="serial_no" class="col-sm-4 col-form-label  bg-olive"> Serial No. :</label>
                     <div class="col-sm-6">
-                      <input type="text" class="form-control" id="inputEmail3" placeholder="PSerial No.">
+                      <input type="text" class="form-control" name="serial_no" id="serial_no" placeholder="PSerial No.">
                     </div>
                   </div>
 
                   <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-4 col-form-label  bg-olive">Cost:</label>
+                    <label for="cost" class="col-sm-4 col-form-label  bg-olive">Cost:</label>
                     <div class="col-sm-6">
-                      <input type="text" class="form-control" id="inputEmail3" placeholder="Cost">
+                      <input type="text" class="form-control" name="cost" id="cost" placeholder="Cost">
                     </div>
                   </div>
 

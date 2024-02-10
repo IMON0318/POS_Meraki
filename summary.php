@@ -1,4 +1,26 @@
+<?php 
 
+include('conn.php');
+
+$purchase_data = $conn->query("SELECT 
+purchase.terms_id,
+terms_data.terms_name,
+purchase.uom_id,
+uom_data.uom_name,
+purchase.Id_client_sup,
+client_supplier_tbl.client_sup_name,
+purchase.*
+FROM 
+purchase
+INNER JOIN 
+terms_data ON purchase.terms_id = terms_data.terms_id
+INNER JOIN 
+uom_data ON purchase.uom_id = uom_data.uom_id
+INNER JOIN
+client_supplier_tbl on purchase.Id_client_sup = client_supplier_tbl.Id_client_sup;
+");
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -79,12 +101,7 @@
                       <input type="date" class="form-control" id="inputEmail3" placeholder="Date">
                     </div>
                   </div>
-</div>
-              
-              
-
-                 
-             
+</div>      
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
@@ -110,90 +127,25 @@
                   </thead>
                   <tbody>
                   <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-
-                  </tr>
-                  <tr>
                   <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
+                  <?php foreach ($purchase_data as $row): ?>
                   <tr>
-                  <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                  <td><?php echo $row['date']; ?></td>
+                  <td><?php echo $row['invoice']; ?></td>
+                  <td><?php echo $row['client_sup_name']; ?></td>
+                  <td><?php echo $row['quantity']; ?></td>
+                  <td><?php echo $row['uom_name']; ?></td>
+                  <td><?php echo $row['po_num']; ?></td>
+                  <td><?php echo $row['price']; ?></td>
+                  <td><?php echo $row['total_amount']; ?></td>
+                  <td><?php echo $row['terms_name']; ?></td>
+                  <td><?php echo $row['date_paid']; ?></td>
+                  <td><?php echo $row['CR']; ?></td>
+                  <td><?php echo $row['mop']; ?></td>
+                  <td><?php echo $row['reference_no']; ?></td>
+                  <td><?php echo $row['remarks']; ?></td>
                   </tr>
-                  <tr>
-                  <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                  <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                  <?php endforeach; ?>
                   </tr>
                   </tfoot>
                 </table>

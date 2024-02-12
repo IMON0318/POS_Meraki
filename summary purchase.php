@@ -8,7 +8,7 @@ terms_data.terms_name,
 purchase.uom_id,
 uom_data.uom_name,
 purchase.Id_client_sup,
-client_supplier_tbl.client_sup_name,
+client_supplier_tbl.name,
 purchase.*
 FROM 
 purchase
@@ -133,7 +133,7 @@ client_supplier_tbl on purchase.Id_client_sup = client_supplier_tbl.Id_client_su
                   <tr>
                   <td><?php echo $row['date']; ?></td>
                   <td><?php echo $row['invoice']; ?></td>
-                  <td><?php echo $row['client_sup_name']; ?></td>
+                  <td><?php echo $row['name']; ?></td>
                   <td><?php echo $row['quantity']; ?></td>
                   <td><?php echo $row['uom_name']; ?></td>
                   <td><?php echo $row['description']; ?></td>
